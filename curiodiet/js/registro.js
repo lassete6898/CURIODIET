@@ -1,9 +1,19 @@
 // Initialize Cloud Firestore through Firebase
-firebase.initializeApp({
-    apiKey: 'AIzaSyB-4WFZvWgwERa6DTPv67QOhYqembJeUJ0',
-    authDomain: 'curiodiet.firebaseapp.com',
-    projectId: 'curiodiet'
-  });
+
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyB-4WFZvWgwERa6DTPv67QOhYqembJeUJ0",
+        authDomain: "curiodiet.firebaseapp.com",
+        databaseURL: "https://curiodiet.firebaseio.com/",
+        projectId: "curiodiet",
+        storageBucket: "curiodiet.appspot.com",
+        messagingSenderId: "234764771665",
+        appId: "1:234764771665:web:645ab1aca681c20d64b370",
+        measurementId: "G-0NY4XKXQDH"
+         };
+        // Initialize Firebase
+         firebase.initializeApp(firebaseConfig);
+        
   
 var db = firebase.firestore();
 
@@ -18,6 +28,14 @@ function guardar(){
     var pais = document.getElementById('pais').value;
     var sexo = document.getElementById('sexo').value;
     var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+
+    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+      });
 
     db.collection("usuarios").add({
         nombre: nombre,
@@ -30,20 +48,21 @@ function guardar(){
         sexo: sexo,
         email: email
     })
-    .then(function(docRef) {
-        console.log("Document written with ID: ", docRef.id);
-        document.getElementById('nombre').value = '';
-        document.getElementById('apellido').value = '';
-        document.getElementById('edad').value = '';
-        document.getElementById('telefono').value = '';
-        document.getElementById('peso').value = '';
-        document.getElementById('estatura').value = '';
-        document.getElementById('pais').value = '';
-        document.getElementById('sexo').value = '';
-        document.getElementById('email').value = '';
+    // .then(function(docRef) {
+    //     console.log("Document written with ID: ", docRef.id);
+    //     document.getElementById('nombre').value = '';
+    //     document.getElementById('apellido').value = '';
+    //     document.getElementById('edad').value = '';
+    //     document.getElementById('telefono').value = '';
+    //     document.getElementById('peso').value = '';
+    //     document.getElementById('estatura').value = '';
+    //     document.getElementById('pais').value = '';
+    //     document.getElementById('sexo').value = '';
+    //     document.getElementById('email').value = '';
 
-        location.href="login.html";
-    })
+    //     location.href="login.html";
+    // })
+    
     .catch(function(error) {
         console.error("Error adding document: ", error);
     });
